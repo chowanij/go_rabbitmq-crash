@@ -25,6 +25,15 @@ func Run() error {
 		return err
 	}
 
+	defer app.Rmq.Conn.Close()
+
+	err = app.Rmq.Publish("Hi")
+
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+
 	return nil
 }
 

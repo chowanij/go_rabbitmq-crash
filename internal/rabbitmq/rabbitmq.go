@@ -65,6 +65,27 @@ func (r *RabbitMQ) Publish(message string) error {
 	return nil
 }
 
+// Consume - 
+func (rmq *RabbitMQ)Consume()  {
+	msgs, err := rmq.Channel.Consume(
+		"TestQueue",
+		"",
+		true,
+		false,
+		false,
+		false,
+		nil,
+	)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	for msg := range msgs {
+		fmt.Printf("Received message %s \n", msg.Body)
+	}
+}
+
 // NewRabbitMQService - 
 func NewRabbitMQService() *RabbitMQ {
 	return &RabbitMQ{}
